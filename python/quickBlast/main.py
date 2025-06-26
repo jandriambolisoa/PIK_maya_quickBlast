@@ -35,6 +35,8 @@ def run(show_output=True):
     folderpath = get_quickblast_folderpath()
     framerate = get_quickblast_framerate()
     resolution = get_quickblast_resolution()
+    sound_filepath = None
+    sound_offset = 0
     if is_sound:
         sound_filepath = get_quickblast_soundfile()
         sound_offset = get_sound_offset()
@@ -77,7 +79,7 @@ def run(show_output=True):
 
         kwargs = {"filename": os.path.join(folderpath, filename)}
 
-        if is_sound:
+        if sound_filepath:
             # Get sound offset in seconds
             sound_offset = sound_offset * (1 / framerate)
 
@@ -88,7 +90,14 @@ def run(show_output=True):
 
             kwargs["t"] = duration
 
-        ffmpeg.output(*streams, **kwargs).run(overwrite_output=True)
+        try:
+            ffmpeg.output(*streams, **kwargs).run(
+                overwrite_output=True, capture_stdout=True, capture_stderr=True
+            )
+        except ffmpeg.Error as exception:
+            print(exception.stdout.decode("UTF-8"))
+            print(exception.stderr.decode("UTF-8"))
+            raise exception
 
     if show_output:
         # Open folder with created video

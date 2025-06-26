@@ -1,6 +1,7 @@
 import os
 
 from maya import cmds
+from maya import OpenMaya
 
 from .constants import MAYA_TIME_UNITS
 
@@ -95,7 +96,15 @@ def get_quickblast_soundfile():
         str: os.path like
     """
     sound_node = get_quickblast_soundnode()
-    return os.path.normpath(cmds.sound(sound_node, query=True, file=True)) or None
+    filepath = os.path.normpath(cmds.sound(sound_node, query=True, file=True))
+
+    if os.path.isfile(filepath):
+        return filepath
+    else:
+        OpenMaya.MGlobal.displayWarning(
+            "Audio file not found. Your quickblast might not sound as expected."
+        )
+        return None
 
 
 def get_sound_offset():
