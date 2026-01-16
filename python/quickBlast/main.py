@@ -19,9 +19,9 @@ from quickBlast.settings import (
 from quickBlast.sanitycheck import check_sound_node, sanitycheck
 
 
-def run(show_output=True):
+def run(show_output=True, custom_filepath=None, show_popup_errors = True):
     # Sanitycheck
-    ready = sanitycheck()
+    ready = sanitycheck(show_popup_errors)
 
     if not ready:
         OpenMaya.MGlobal.displayError("Could not run Quickblast.")
@@ -33,6 +33,8 @@ def run(show_output=True):
     duration = get_quickblast_duration()
     filename = get_quickblast_filename()
     folderpath = get_quickblast_folderpath()
+    if custom_filepath:
+        folderpath, filename = os.path.split(custom_filepath)
     framerate = get_quickblast_framerate()
     resolution = get_quickblast_resolution()
     sound_filepath = None
