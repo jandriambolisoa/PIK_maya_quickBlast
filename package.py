@@ -1,6 +1,6 @@
 name = "PIK_maya_quickBlast"
 
-version = "0.0.3"
+version = "0.0.4"
 
 authors = [
     "Jeremy Andriambolisoa",
