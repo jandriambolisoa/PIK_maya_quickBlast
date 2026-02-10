@@ -29,6 +29,7 @@ def get_quickblast_filename(extension: str = ".mp4"):
     """
     # Get scene filename
     filepath = cmds.file(query=True, sceneName=True)
+
     _, filename = os.path.split(os.path.normpath(filepath))
 
     # Replace extension
@@ -37,6 +38,9 @@ def get_quickblast_filename(extension: str = ".mp4"):
     # Check if there is a dot
     if not "." in extension:
         extension = ".%s" % extension
+
+    if not filepath:
+        filename = "untitled"
 
     return f"{filename}{extension.lower()}"
 

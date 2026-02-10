@@ -9,7 +9,7 @@ def sanitycheck(show_popup_errors: bool):
     Returns:
         bool: All checks passed
     """
-    to_check = (check_scene_status, check_selection, check_time_slider)
+    to_check = (check_selection, check_time_slider)
 
     for check in to_check:
         if not check(show_popup_errors = show_popup_errors):
