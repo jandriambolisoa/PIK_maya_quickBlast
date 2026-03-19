@@ -136,4 +136,4 @@ def get_quickblast_duration():
     """
     start = cmds.playbackOptions(query=True, min=True)
     end = cmds.playbackOptions(query=True, max=True)
-    return int(end - start)
+    return int(end - start) + 1
