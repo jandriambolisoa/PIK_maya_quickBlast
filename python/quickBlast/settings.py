@@ -122,6 +122,7 @@ def get_sound_offset():
     if sound_node:
         start_frame = cmds.playbackOptions(query=True, min=True)
         offset = cmds.sound(sound_node, query=True, offset=True)
+        offset -= cmds.sound(sound_node, query=True, sourceStart=True)
         return offset - start_frame
     else:
         return None
@@ -135,4 +136,4 @@ def get_quickblast_duration():
     """
     start = cmds.playbackOptions(query=True, min=True)
     end = cmds.playbackOptions(query=True, max=True)
-    return int(end - start)
+    return int(end - start) + 1
